@@ -1,0 +1,83 @@
+
+
+FinfFile
+===============
+
+.. currentmodule:: pyfinf
+
+.. autoclass:: FinfFile
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~FinfFile.blocks
+      ~FinfFile.tree
+      ~FinfFile.uri
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~FinfFile.close
+      ~FinfFile.find_references
+      ~FinfFile.make_reference
+      ~FinfFile.read
+      ~FinfFile.read_external
+      ~FinfFile.resolve_references
+      ~FinfFile.resolve_uri
+      ~FinfFile.set_block_type
+      ~FinfFile.update
+      ~FinfFile.write_to
+      ~FinfFile.write_to_stream
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: blocks
+   .. autoattribute:: tree
+   .. autoattribute:: uri
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: close
+   .. automethod:: find_references
+   .. automethod:: make_reference
+   .. automethod:: read
+   .. automethod:: read_external
+   .. automethod:: resolve_references
+   .. automethod:: resolve_uri
+   .. automethod:: set_block_type
+   .. automethod:: update
+   .. automethod:: write_to
+   .. automethod:: write_to_stream
+
+   
+   

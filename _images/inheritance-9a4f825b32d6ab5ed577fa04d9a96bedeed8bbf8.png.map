@@ -1,0 +1,5 @@
+<map id="inheritance8324d3e155" name="inheritance8324d3e155">
+<area shape="rect" id="node1" title="The base class of all custom types in the tree." alt="" coords="28,54,103,79"/>
+<area shape="rect" id="node6" href="../api/pyfinf.FinfFile.html#pyfinf.FinfFile" title="The main class that represents a FINF file." alt="" coords="191,5,263,30"/>
+<area shape="rect" id="node3" href="../api/pyfinf.Stream.html#pyfinf.Stream" title="Used to put a streamed array into the tree." alt="" coords="328,54,400,79"/>
+</map>

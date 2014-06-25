@@ -1,0 +1,65 @@
+
+
+Stream
+=============
+
+.. currentmodule:: pyfinf
+
+.. autoclass:: Stream
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~Stream.types
+      ~Stream.yaml_tag
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~Stream.from_tree
+      ~Stream.pre_write
+      ~Stream.to_tree
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: types
+   .. autoattribute:: yaml_tag
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: from_tree
+   .. automethod:: pre_write
+   .. automethod:: to_tree
+
+   
+   

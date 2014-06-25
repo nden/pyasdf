@@ -1,0 +1,8 @@
+
+
+open
+===========
+
+.. currentmodule:: pyfinf
+
+.. autofunction:: open

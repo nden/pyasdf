@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Stream &mdash; pyfinf v0.0.dev149</title>
+    
+    <link rel="stylesheet" href="../_static/bootstrap-astropy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.dev149',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="top" title="pyfinf v0.0.dev149" href="../index.html" />
+    <link rel="up" title="pyfinf" href="../pyfinf/index.html" />
+    <link rel="prev" title="FinfFile" href="pyfinf.FinfFile.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">astro</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="pyfinf.FinfFile.html" title="FinfFile">
+	  &laquo; previous
+	</a>
+	
+      </li>
+      <li>
+	<a href="../index.html">pyfinf v0.0.dev149</a>
+	 &raquo;
+      </li>
+      <li><a href="../pyfinf/index.html" accesskey="U">pyfinf</a> &raquo;</li>
+      
+      <li>Stream</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="stream">
+<h1>Stream<a class="headerlink" href="#stream" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pyfinf.Stream">
+<em class="property">class </em><tt class="descclassname">pyfinf.</tt><tt class="descname">Stream</tt><big>(</big><em>shape</em>, <em>dtype</em>, <em>strides=None</em><big>)</big><a class="reference internal" href="../_modules/pyfinf/stream.html#Stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyfinf.Stream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">pyfinf.tags.core.ndarray.NDArrayType</span></tt></p>
+<p>Used to put a streamed array into the tree.</p>
+<p class="rubric">Examples</p>
+<p>Save a double-precision array with 1024 columns, one row at a
+time:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyfinf</span> <span class="kn">import</span> <span class="n">FinfFile</span><span class="p">,</span> <span class="n">Stream</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ff</span> <span class="o">=</span> <span class="n">FinfFile</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ff</span><span class="o">.</span><span class="n">tree</span><span class="p">[</span><span class="s">&#39;streamed&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Stream</span><span class="p">([</span><span class="mi">1024</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">ff</span><span class="o">.</span><span class="n">write_to</span><span class="p">(</span><span class="s">&#39;test.finf&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ff</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="n">ff</span><span class="o">.</span><span class="n">write_to_stream</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span><span class="o">.</span><span class="n">tostring</span><span class="p">())</span>
+</pre></div>
+</div>
+<p class="rubric">Attributes Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pyfinf.Stream.types" title="pyfinf.Stream.types"><tt class="xref py py-obj docutils literal"><span class="pre">types</span></tt></a></td>
+<td>list() -&gt; new empty list</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyfinf.Stream.yaml_tag" title="pyfinf.Stream.yaml_tag"><tt class="xref py py-obj docutils literal"><span class="pre">yaml_tag</span></tt></a></td>
+<td>unicode(object=&#8217;&#8216;) -&gt; unicode object</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pyfinf.Stream.from_tree" title="pyfinf.Stream.from_tree"><tt class="xref py py-obj docutils literal"><span class="pre">from_tree</span></tt></a>(data,&nbsp;ctx)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyfinf.Stream.pre_write" title="pyfinf.Stream.pre_write"><tt class="xref py py-obj docutils literal"><span class="pre">pre_write</span></tt></a>(data,&nbsp;ctx)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyfinf.Stream.to_tree" title="pyfinf.Stream.to_tree"><tt class="xref py py-obj docutils literal"><span class="pre">to_tree</span></tt></a>(data,&nbsp;ctx)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Documentation</p>
+<dl class="attribute">
+<dt id="pyfinf.Stream.types">
+<tt class="descname">types</tt><em class="property"> = []</em><a class="headerlink" href="#pyfinf.Stream.types" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyfinf.Stream.yaml_tag">
+<tt class="descname">yaml_tag</tt><em class="property"> = u'tag:stsci.edu:finf/0.1.0/core/ndarray'</em><a class="headerlink" href="#pyfinf.Stream.yaml_tag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p class="rubric">Methods Documentation</p>
+<dl class="classmethod">
+<dt id="pyfinf.Stream.from_tree">
+<em class="property">classmethod </em><tt class="descname">from_tree</tt><big>(</big><em>data</em>, <em>ctx</em><big>)</big><a class="reference internal" href="../_modules/pyfinf/stream.html#Stream.from_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyfinf.Stream.from_tree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="pyfinf.Stream.pre_write">
+<em class="property">classmethod </em><tt class="descname">pre_write</tt><big>(</big><em>data</em>, <em>ctx</em><big>)</big><a class="reference internal" href="../_modules/pyfinf/stream.html#Stream.pre_write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyfinf.Stream.pre_write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="pyfinf.Stream.to_tree">
+<em class="property">classmethod </em><tt class="descname">to_tree</tt><big>(</big><em>data</em>, <em>ctx</em><big>)</big><a class="reference internal" href="../_modules/pyfinf/stream.html#Stream.to_tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyfinf.Stream.to_tree" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="#">Stream</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/pyfinf.Stream.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, Erik Bray, Michael Droettboom.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2. &nbsp;
+    Last built 25 Jun 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

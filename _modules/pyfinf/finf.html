@@ -1,0 +1,475 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyfinf.finf &mdash; pyfinf v0.0.dev149</title>
+    
+    <link rel="stylesheet" href="../../_static/bootstrap-astropy.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0.dev149',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../_static/astropy_logo.ico"/>
+    <link rel="top" title="pyfinf v0.0.dev149" href="../../index.html" />
+    <link rel="up" title="pyfinf" href="../pyfinf.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../index.html"><span id="logotext1">astro</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="../../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../index.html">pyfinf v0.0.dev149</a>
+	 &raquo;
+      </li>
+      <li><a href="../index.html" >Module code</a> &raquo;</li>
+      <li><a href="../pyfinf.html" accesskey="U">pyfinf</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for pyfinf.finf</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">unicode_literals</span><span class="p">,</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">block</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">constants</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">generic_io</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">reference</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">util</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">versioning</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">yamlutil</span>
+
+<span class="kn">from</span> <span class="nn">.tags.core.finf</span> <span class="kn">import</span> <span class="n">FinfObject</span>
+
+
+<div class="viewcode-block" id="FinfFile"><a class="viewcode-back" href="../../api/pyfinf.FinfFile.html#pyfinf.FinfFile">[docs]</a><span class="k">class</span> <span class="nc">FinfFile</span><span class="p">(</span><span class="n">versioning</span><span class="o">.</span><span class="n">VersionedMixin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The main class that represents a FINF file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        tree : dict or FinfFile, optional</span>
+<span class="sd">            The main tree data in the FINF file.  Must conform to the</span>
+<span class="sd">            FINF schema.</span>
+
+<span class="sd">        uri : str, optional</span>
+<span class="sd">            The URI for this FINF file.  Used to resolve relative</span>
+<span class="sd">            references against.  If not provided, will automatically</span>
+<span class="sd">            determined from the associated file object, if possible</span>
+<span class="sd">            and if created from `FinfFile.read`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_external_finf_by_uri</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_blocks</span> <span class="o">=</span> <span class="n">block</span><span class="o">.</span><span class="n">BlockManager</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">tree</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_uri</span> <span class="o">=</span> <span class="n">uri</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">FinfFile</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_uri</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">uri</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">tree</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">find_references</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_uri</span> <span class="o">=</span> <span class="n">uri</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="n">tree</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_uri</span> <span class="o">=</span> <span class="n">uri</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">find_references</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<div class="viewcode-block" id="FinfFile.close"><a class="viewcode-back" href="../../api/pyfinf.FinfFile.html#pyfinf.FinfFile.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Close the file handles associated with the `FinfFile`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="p">:</span>
+            <span class="c"># This is ok to always do because GenericFile knows</span>
+            <span class="c"># whether it &quot;owns&quot; the file and should close it.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">for</span> <span class="n">external</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_external_finf_by_uri</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">external</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_external_finf_by_uri</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">uri</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the URI associated with the `FinfFile`.</span>
+
+<span class="sd">        In many cases, it is automatically determined from the file</span>
+<span class="sd">        handle used to read or write the file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uri</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uri</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="o">.</span><span class="n">_uri</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+<div class="viewcode-block" id="FinfFile.resolve_uri"><a class="viewcode-back" href="../../api/pyfinf.FinfFile.html#pyfinf.FinfFile.resolve_uri">[docs]</a>    <span class="k">def</span> <span class="nf">resolve_uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Resolve a (possibly relative) URI against the URI of this FINF</span>
+<span class="sd">        file.  May be overridden by base classes to change how URIs</span>
+<span class="sd">        are resolved.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        uri : str</span>
+<span class="sd">            An absolute or relative URI to resolve against the URI of</span>
+<span class="sd">            this FINF file.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        uri : str</span>
+<span class="sd">            The resolved URI.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">generic_io</span><span class="o">.</span><span class="n">resolve_uri</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uri</span><span class="p">,</span> <span class="n">uri</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="FinfFile.read_external"><a class="viewcode-back" href="../../api/pyfinf.FinfFile.html#pyfinf.FinfFile.read_external">[docs]</a>    <span class="k">def</span> <span class="nf">read_external</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load an external FINF file, from the given (possibly relative)</span>
+<span class="sd">        URI.  There is a cache (internal to this FINF file) that ensures</span>
+<span class="sd">        each external FINF file is loaded only once.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        uri : str</span>
+<span class="sd">            An absolute or relative URI to resolve against the URI of</span>
+<span class="sd">            this FINF file.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        finffile : FinfFile</span>
+<span class="sd">            The external FINF file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># For a cache key, we want to ignore the &quot;fragment&quot; part.</span>
+        <span class="n">base_uri</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">get_base_uri</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+        <span class="n">resolved_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolve_uri</span><span class="p">(</span><span class="n">base_uri</span><span class="p">)</span>
+
+        <span class="c"># A uri like &quot;#&quot; should resolve back to ourself.  In that case,</span>
+        <span class="c"># just return `self`.</span>
+        <span class="k">if</span> <span class="n">resolved_uri</span> <span class="o">==</span> <span class="s">&#39;&#39;</span> <span class="ow">or</span> <span class="n">resolved_uri</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">uri</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+
+        <span class="n">finffile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_external_finf_by_uri</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">resolved_uri</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">finffile</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">finffile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">resolved_uri</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_external_finf_by_uri</span><span class="p">[</span><span class="n">resolved_uri</span><span class="p">]</span> <span class="o">=</span> <span class="n">finffile</span>
+        <span class="k">return</span> <span class="n">finffile</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">tree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the tree of data in the FINF file.</span>
+
+<span class="sd">        When set, the tree will be validated against the FINF schema.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tree</span>
+
+    <span class="nd">@tree.setter</span>
+    <span class="k">def</span> <span class="nf">tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="n">yamlutil</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tree</span> <span class="o">=</span> <span class="n">FinfObject</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+
+<div class="viewcode-block" id="FinfFile.make_reference"><a class="viewcode-back" href="../../api/pyfinf.FinfFile.html#pyfinf.FinfFile.make_reference">[docs]</a>    <span class="k">def</span> <span class="nf">make_reference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="p">[]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make a new reference to a part of this file&#39;s tree, that can be</span>
+<span class="sd">        assigned as a reference to another tree.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        path : list of str and int, optional</span>
+<span class="sd">            The parts of the path pointing to an item in this tree.</span>
+<span class="sd">            If omitted, points to the root of the tree.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        reference : reference.Reference</span>
+<span class="sd">            A reference object.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        For the given FinfFile ``ff``, add an external reference to the data in</span>
+<span class="sd">        an external file::</span>
+
+<span class="sd">            &gt;&gt;&gt; import pyfinf</span>
+<span class="sd">            &gt;&gt;&gt; flat = pyfinf.open(&quot;http://stsci.edu/reference_files/flat.finf&quot;)  # doctest: +SKIP</span>
+<span class="sd">            &gt;&gt;&gt; ff.tree[&#39;flat_field&#39;] = flat.make_reference([&#39;data&#39;])  # doctest: +SKIP</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">reference</span><span class="o">.</span><span class="n">make_reference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">blocks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the block manager associated with the `FinfFile`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_blocks</span>
+
+<div class="viewcode-block" id="FinfFile.set_block_type"><a class="viewcode-back" href="../../api/pyfinf.FinfFile.html#pyfinf.FinfFile.set_block_type">[docs]</a>    <span class="k">def</span> <span class="nf">set_block_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arr</span><span class="p">,</span> <span class="n">block_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the block type to use for the given array data.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        arr : numpy.ndarray</span>
+<span class="sd">            The array to set.  If multiple views of the array are in</span>
+<span class="sd">            the tree, only the most recent block type setting will be</span>
+<span class="sd">            used, since all views share a single block.</span>
+
+<span class="sd">        block_type : str</span>
+<span class="sd">            Must be one of:</span>
+
+<span class="sd">            - ``internal``: The default.  The array data will be</span>
+<span class="sd">              stored in a binary block in the same FINF file.</span>
+
+<span class="sd">            - ``external``: Store the data in a binary block in a</span>
+<span class="sd">              separate FINF file.</span>
+
+<span class="sd">            - ``inline``: Store the data as YAML inline in the tree.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="p">[</span><span class="n">arr</span><span class="p">]</span><span class="o">.</span><span class="n">block_type</span> <span class="o">=</span> <span class="n">block_type</span>
+</div>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_parse_header_line</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parses the header line in a FINF file to obtain the FINF version.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">regex</span> <span class="o">=</span> <span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">FINF_MAGIC</span> <span class="o">+</span>
+                 <span class="n">b</span><span class="s">&#39;(?P&lt;major&gt;[0-9]+)\.(?P&lt;minor&gt;[0-9]+)\.(?P&lt;micro&gt;[0-9]+)&#39;</span><span class="p">)</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Does not appear to be a FINF file.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s">&quot;major&quot;</span><span class="p">)),</span>
+                <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s">&quot;minor&quot;</span><span class="p">)),</span>
+                <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s">&quot;micro&quot;</span><span class="p">)))</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="FinfFile.read"><a class="viewcode-back" href="../../api/pyfinf.FinfFile.html#pyfinf.FinfFile.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;r&#39;</span><span class="p">,</span> <span class="n">_get_yaml_content</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read a FINF file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fd : string or file-like object</span>
+<span class="sd">            May be a string ``file`` or ``http`` URI, or a Python</span>
+<span class="sd">            file-like object.</span>
+
+<span class="sd">        uri : string, optional</span>
+<span class="sd">            The URI of the file.  Only required if the URI can not be</span>
+<span class="sd">            automatically determined from `fd`.</span>
+
+<span class="sd">        mode : string, optional</span>
+<span class="sd">            The mode to open the file in.  Must be ``r`` (default) or</span>
+<span class="sd">            ``rw``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        finffile : FinfFile</span>
+<span class="sd">            The new FinfFile object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fd</span> <span class="o">=</span> <span class="n">generic_io</span><span class="o">.</span><span class="n">get_file</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">)</span>
+
+        <span class="bp">self</span> <span class="o">=</span> <span class="n">cls</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span> <span class="o">=</span> <span class="n">fd</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">header_line</span> <span class="o">=</span> <span class="n">fd</span><span class="o">.</span><span class="n">read_until</span><span class="p">(</span><span class="n">b</span><span class="s">&#39;</span><span class="se">\r</span><span class="s">?</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="s">&quot;newline&quot;</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Does not appear to be a FINF file.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">_parse_header_line</span><span class="p">(</span><span class="n">header_line</span><span class="p">)</span>
+
+        <span class="n">yaml_token</span> <span class="o">=</span> <span class="n">fd</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">yaml_content</span> <span class="o">=</span> <span class="n">b</span><span class="s">&#39;&#39;</span>
+        <span class="n">has_blocks</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">if</span> <span class="n">yaml_token</span> <span class="o">==</span> <span class="n">b</span><span class="s">&#39;%YAM&#39;</span><span class="p">:</span>
+            <span class="c"># The yaml content is read now, but we parse it after finding</span>
+            <span class="c"># all of the blocks, so that arrays can be resolved to their</span>
+            <span class="c"># blocks immediately.</span>
+            <span class="n">yaml_content</span> <span class="o">=</span> <span class="n">yaml_token</span> <span class="o">+</span> <span class="n">fd</span><span class="o">.</span><span class="n">read_until</span><span class="p">(</span>
+                <span class="n">constants</span><span class="o">.</span><span class="n">YAML_END_MARKER_REGEX</span><span class="p">,</span> <span class="s">&#39;End of YAML marker&#39;</span><span class="p">,</span>
+                <span class="n">include</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            <span class="n">has_blocks</span> <span class="o">=</span> <span class="n">fd</span><span class="o">.</span><span class="n">seek_until</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">BLOCK_MAGIC</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">yaml_token</span> <span class="o">==</span> <span class="n">constants</span><span class="o">.</span><span class="n">BLOCK_MAGIC</span><span class="p">:</span>
+            <span class="n">has_blocks</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">elif</span> <span class="n">yaml_token</span> <span class="o">!=</span> <span class="n">b</span><span class="s">&#39;&#39;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s">&quot;FINF file appears to contain garbage after header.&quot;</span><span class="p">)</span>
+
+        <span class="c"># For testing: just return the raw YAML content</span>
+        <span class="k">if</span> <span class="n">_get_yaml_content</span><span class="p">:</span>
+            <span class="n">fd</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">yaml_content</span>
+
+        <span class="k">if</span> <span class="n">has_blocks</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_blocks</span><span class="o">.</span><span class="n">read_internal_blocks</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">past_magic</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">yaml_content</span><span class="p">):</span>
+            <span class="n">ctx</span> <span class="o">=</span> <span class="n">yamlutil</span><span class="o">.</span><span class="n">Context</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">tree</span> <span class="o">=</span> <span class="n">yamlutil</span><span class="o">.</span><span class="n">load_tree</span><span class="p">(</span><span class="n">yaml_content</span><span class="p">,</span> <span class="n">ctx</span><span class="p">)</span>
+            <span class="n">ctx</span><span class="o">.</span><span class="n">run_hook</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="s">&#39;post_read&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tree</span> <span class="o">=</span> <span class="n">tree</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tree</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">return</span> <span class="bp">self</span>
+</div>
+<div class="viewcode-block" id="FinfFile.update"><a class="viewcode-back" href="../../api/pyfinf.FinfFile.html#pyfinf.FinfFile.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the file on disk in place (not implemented).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="FinfFile.write_to"><a class="viewcode-back" href="../../api/pyfinf.FinfFile.html#pyfinf.FinfFile.write_to">[docs]</a>    <span class="k">def</span> <span class="nf">write_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">exploded</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Write the FINF file to the given file-like object.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fd : string or file-like object</span>
+<span class="sd">            May be a string path to a file, or a Python file-like</span>
+<span class="sd">            object.</span>
+
+<span class="sd">        exploded : bool, optional</span>
+<span class="sd">            If `True`, write each data block in a separate FINF file.</span>
+<span class="sd">            If `False`, write each data block in this FINF file.  If</span>
+<span class="sd">            not provided, leave the block types as they are.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="n">yamlutil</span><span class="o">.</span><span class="n">Context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{</span>
+            <span class="s">&#39;exploded&#39;</span><span class="p">:</span> <span class="n">exploded</span><span class="p">})</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s">&quot;FINF file is already open.  Use `update` to save it.&quot;</span><span class="p">)</span>
+        <span class="n">fd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span> <span class="o">=</span> <span class="n">generic_io</span><span class="o">.</span><span class="n">get_file</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">exploded</span> <span class="ow">and</span> <span class="n">fd</span><span class="o">.</span><span class="n">uri</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s">&quot;Can not write an exploded file without knowing its URI.&quot;</span><span class="p">)</span>
+
+        <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tree</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c"># This is where we&#39;d do some more sophisticated block</span>
+            <span class="c"># reorganization, if necessary</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_blocks</span><span class="o">.</span><span class="n">finalize</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+
+            <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">constants</span><span class="o">.</span><span class="n">FINF_MAGIC</span><span class="p">)</span>
+            <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">version_string</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&#39;ascii&#39;</span><span class="p">))</span>
+            <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">b</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
+                <span class="n">ctx</span><span class="o">.</span><span class="n">run_hook</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="s">&#39;pre_write&#39;</span><span class="p">)</span>
+                <span class="n">yamlutil</span><span class="o">.</span><span class="n">dump_tree</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span> <span class="n">ctx</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="o">.</span><span class="n">write_blocks</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
+                <span class="n">ctx</span><span class="o">.</span><span class="n">run_hook</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="s">&#39;post_write&#39;</span><span class="p">)</span>
+
+        <span class="n">fd</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span>
+</div>
+<div class="viewcode-block" id="FinfFile.write_to_stream"><a class="viewcode-back" href="../../api/pyfinf.FinfFile.html#pyfinf.FinfFile.write_to_stream">[docs]</a>    <span class="k">def</span> <span class="nf">write_to_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Append additional data to the end of the `FinfFile` for</span>
+<span class="sd">        stream-writing.</span>
+
+<span class="sd">        See `pyfinf.Stream`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">blocks</span><span class="o">.</span><span class="n">streamed_block</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;FinfFile has not streamed block to write to&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="FinfFile.find_references"><a class="viewcode-back" href="../../api/pyfinf.FinfFile.html#pyfinf.FinfFile.find_references">[docs]</a>    <span class="k">def</span> <span class="nf">find_references</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Finds all external &quot;JSON References&quot; in the tree and converts</span>
+<span class="sd">        them to `reference.Reference` objects.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="n">yamlutil</span><span class="o">.</span><span class="n">Context</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="n">reference</span><span class="o">.</span><span class="n">find_references</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">,</span> <span class="n">ctx</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="FinfFile.resolve_references"><a class="viewcode-back" href="../../api/pyfinf.FinfFile.html#pyfinf.FinfFile.resolve_references">[docs]</a>    <span class="k">def</span> <span class="nf">resolve_references</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Finds all external &quot;JSON References&quot; in the tree, loads the</span>
+<span class="sd">        external content, and places it directly in the tree.  Saving</span>
+<span class="sd">        a FINF file after this operation means it will have no</span>
+<span class="sd">        external references, and will be completely self-contained.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ctx</span> <span class="o">=</span> <span class="n">yamlutil</span><span class="o">.</span><span class="n">Context</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">reference</span><span class="o">.</span><span class="n">resolve_references</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">,</span> <span class="n">ctx</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="n">tree</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, Erik Bray, Michael Droettboom.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2. &nbsp;
+    Last built 25 Jun 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

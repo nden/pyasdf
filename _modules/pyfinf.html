@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyfinf &mdash; pyfinf v0.0.dev149</title>
+    
+    <link rel="stylesheet" href="../_static/bootstrap-astropy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.dev149',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="top" title="pyfinf v0.0.dev149" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">astro</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../index.html">pyfinf v0.0.dev149</a>
+	 &raquo;
+      </li>
+      <li><a href="index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for pyfinf</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">unicode_literals</span><span class="p">,</span> <span class="n">print_function</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">PyFINF: Python library for reading and writing FINF files</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c"># Affiliated packages may add whatever they like to this file, but</span>
+<span class="c"># should keep this content at the top.</span>
+<span class="c"># ----------------------------------------------------------------------------</span>
+<span class="kn">from</span> <span class="nn">._astropy_init</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="c"># ----------------------------------------------------------------------------</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;FinfFile&#39;</span><span class="p">,</span> <span class="s">&#39;Stream&#39;</span><span class="p">,</span> <span class="s">&#39;open&#39;</span><span class="p">,</span> <span class="s">&#39;test&#39;</span><span class="p">]</span>
+
+<span class="kn">from</span> <span class="nn">.finf</span> <span class="kn">import</span> <span class="n">FinfFile</span>
+<span class="kn">from</span> <span class="nn">.stream</span> <span class="kn">import</span> <span class="n">Stream</span>
+
+
+<div class="viewcode-block" id="open"><a class="viewcode-back" href="../api/pyfinf.open.html#pyfinf.open">[docs]</a><span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;rw&#39;</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Open a `FinfFile`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fd : string or file-like object</span>
+<span class="sd">        May be a string ``file`` or ``http`` URI, or a Python</span>
+<span class="sd">        file-like object.</span>
+
+<span class="sd">    mode : string, optional</span>
+<span class="sd">        Must be ``&quot;r&quot;`` (read), ``&quot;w&quot;`` (write) or ``&quot;rw&quot;``</span>
+<span class="sd">        (read/write).  Default: ``&quot;rw&quot;``.</span>
+
+<span class="sd">    uri : string, optional</span>
+<span class="sd">        The URI of the file.  Only required if the URI can not be</span>
+<span class="sd">        automatically determined from `init`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">FinfFile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="n">uri</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, Erik Bray, Michael Droettboom.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2. &nbsp;
+    Last built 25 Jun 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>
