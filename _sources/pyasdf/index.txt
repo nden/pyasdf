@@ -1,8 +1,8 @@
 ******
-pyfinf
+pyasdf
 ******
 
-This is the documentation for pyfinf.
+This is the documentation for pyasdf.
 
 .. toctree::
    :maxdepth: 2
@@ -12,4 +12,4 @@ This is the documentation for pyfinf.
 Reference/API
 =============
 
-.. automodapi:: pyfinf
+.. automodapi:: pyasdf

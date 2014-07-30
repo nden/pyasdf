@@ -1,11 +1,11 @@
 
 
-FinfFile
+AsdfFile
 ===============
 
-.. currentmodule:: pyfinf
+.. currentmodule:: pyasdf
 
-.. autoclass:: FinfFile
+.. autoclass:: AsdfFile
    :show-inheritance:
 
    
@@ -19,9 +19,9 @@ FinfFile
 
    .. autosummary::
    
-      ~FinfFile.blocks
-      ~FinfFile.tree
-      ~FinfFile.uri
+      ~AsdfFile.blocks
+      ~AsdfFile.tree
+      ~AsdfFile.uri
 
    
    
@@ -33,17 +33,17 @@ FinfFile
 
    .. autosummary::
    
-      ~FinfFile.close
-      ~FinfFile.find_references
-      ~FinfFile.make_reference
-      ~FinfFile.read
-      ~FinfFile.read_external
-      ~FinfFile.resolve_references
-      ~FinfFile.resolve_uri
-      ~FinfFile.set_block_type
-      ~FinfFile.update
-      ~FinfFile.write_to
-      ~FinfFile.write_to_stream
+      ~AsdfFile.close
+      ~AsdfFile.find_references
+      ~AsdfFile.make_reference
+      ~AsdfFile.read
+      ~AsdfFile.read_external
+      ~AsdfFile.resolve_references
+      ~AsdfFile.resolve_uri
+      ~AsdfFile.set_block_type
+      ~AsdfFile.update
+      ~AsdfFile.write_to
+      ~AsdfFile.write_to_stream
 
    
    

@@ -3,6 +3,6 @@
 test
 ===========
 
-.. currentmodule:: pyfinf
+.. currentmodule:: pyasdf
 
 .. autofunction:: test

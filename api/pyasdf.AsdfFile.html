@@ -1,0 +1,441 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>AsdfFile &mdash; pyasdf v0.0.dev155</title>
+    
+    <link rel="stylesheet" href="../_static/bootstrap-astropy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.dev155',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="top" title="pyasdf v0.0.dev155" href="../index.html" />
+    <link rel="up" title="pyasdf" href="../pyasdf/index.html" />
+    <link rel="next" title="Stream" href="pyasdf.Stream.html" />
+    <link rel="prev" title="test" href="pyasdf.test.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">astro</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="pyasdf.Stream.html" title="Stream">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="pyasdf.test.html" title="test">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">pyasdf v0.0.dev155</a>
+	 &raquo;
+      </li>
+      <li><a href="../pyasdf/index.html" accesskey="U">pyasdf</a> &raquo;</li>
+      
+      <li>AsdfFile</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="asdffile">
+<h1>AsdfFile<a class="headerlink" href="#asdffile" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pyasdf.AsdfFile">
+<em class="property">class </em><tt class="descclassname">pyasdf.</tt><tt class="descname">AsdfFile</tt><big>(</big><em>tree=None</em>, <em>uri=None</em><big>)</big><a class="reference internal" href="../_modules/pyasdf/asdf.html#AsdfFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyasdf.AsdfFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">pyasdf.versioning.VersionedMixin</span></tt></p>
+<p>The main class that represents a ASDF file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>tree</strong> : dict or AsdfFile, optional</p>
+<blockquote>
+<div><p>The main tree data in the ASDF file.  Must conform to the
+ASDF schema.</p>
+</div></blockquote>
+<p><strong>uri</strong> : str, optional</p>
+<blockquote class="last">
+<div><p>The URI for this ASDF file.  Used to resolve relative
+references against.  If not provided, will automatically
+determined from the associated file object, if possible
+and if created from <a class="reference internal" href="#pyasdf.AsdfFile.read" title="pyasdf.AsdfFile.read"><tt class="xref py py-obj docutils literal"><span class="pre">AsdfFile.read</span></tt></a>.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pyasdf.AsdfFile.blocks" title="pyasdf.AsdfFile.blocks"><tt class="xref py py-obj docutils literal"><span class="pre">blocks</span></tt></a></td>
+<td>Get the block manager associated with the <a class="reference internal" href="#pyasdf.AsdfFile" title="pyasdf.AsdfFile"><tt class="xref py py-obj docutils literal"><span class="pre">AsdfFile</span></tt></a>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyasdf.AsdfFile.tree" title="pyasdf.AsdfFile.tree"><tt class="xref py py-obj docutils literal"><span class="pre">tree</span></tt></a></td>
+<td>Get the tree of data in the ASDF file.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyasdf.AsdfFile.uri" title="pyasdf.AsdfFile.uri"><tt class="xref py py-obj docutils literal"><span class="pre">uri</span></tt></a></td>
+<td>Get the URI associated with the <a class="reference internal" href="#pyasdf.AsdfFile" title="pyasdf.AsdfFile"><tt class="xref py py-obj docutils literal"><span class="pre">AsdfFile</span></tt></a>.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pyasdf.AsdfFile.close" title="pyasdf.AsdfFile.close"><tt class="xref py py-obj docutils literal"><span class="pre">close</span></tt></a>()</td>
+<td>Close the file handles associated with the <a class="reference internal" href="#pyasdf.AsdfFile" title="pyasdf.AsdfFile"><tt class="xref py py-obj docutils literal"><span class="pre">AsdfFile</span></tt></a>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyasdf.AsdfFile.find_references" title="pyasdf.AsdfFile.find_references"><tt class="xref py py-obj docutils literal"><span class="pre">find_references</span></tt></a>()</td>
+<td>Finds all external &#8220;JSON References&#8221; in the tree and converts them to <tt class="xref py py-obj docutils literal"><span class="pre">reference.Reference</span></tt> objects.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyasdf.AsdfFile.make_reference" title="pyasdf.AsdfFile.make_reference"><tt class="xref py py-obj docutils literal"><span class="pre">make_reference</span></tt></a>([path])</td>
+<td>Make a new reference to a part of this file&#8217;s tree, that can be assigned as a reference to another tree.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyasdf.AsdfFile.read" title="pyasdf.AsdfFile.read"><tt class="xref py py-obj docutils literal"><span class="pre">read</span></tt></a>(fd[,&nbsp;uri,&nbsp;mode,&nbsp;_get_yaml_content])</td>
+<td>Read a ASDF file.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyasdf.AsdfFile.read_external" title="pyasdf.AsdfFile.read_external"><tt class="xref py py-obj docutils literal"><span class="pre">read_external</span></tt></a>(uri)</td>
+<td>Load an external ASDF file, from the given (possibly relative) URI.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyasdf.AsdfFile.resolve_references" title="pyasdf.AsdfFile.resolve_references"><tt class="xref py py-obj docutils literal"><span class="pre">resolve_references</span></tt></a>()</td>
+<td>Finds all external &#8220;JSON References&#8221; in the tree, loads the external content, and places it directly in the tree.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyasdf.AsdfFile.resolve_uri" title="pyasdf.AsdfFile.resolve_uri"><tt class="xref py py-obj docutils literal"><span class="pre">resolve_uri</span></tt></a>(uri)</td>
+<td>Resolve a (possibly relative) URI against the URI of this ASDF file.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyasdf.AsdfFile.set_block_type" title="pyasdf.AsdfFile.set_block_type"><tt class="xref py py-obj docutils literal"><span class="pre">set_block_type</span></tt></a>(arr,&nbsp;block_type)</td>
+<td>Set the block type to use for the given array data.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyasdf.AsdfFile.update" title="pyasdf.AsdfFile.update"><tt class="xref py py-obj docutils literal"><span class="pre">update</span></tt></a>()</td>
+<td>Update the file on disk in place (not implemented).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyasdf.AsdfFile.write_to" title="pyasdf.AsdfFile.write_to"><tt class="xref py py-obj docutils literal"><span class="pre">write_to</span></tt></a>(fd[,&nbsp;exploded])</td>
+<td>Write the ASDF file to the given file-like object.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyasdf.AsdfFile.write_to_stream" title="pyasdf.AsdfFile.write_to_stream"><tt class="xref py py-obj docutils literal"><span class="pre">write_to_stream</span></tt></a>(data)</td>
+<td>Append additional data to the end of the <a class="reference internal" href="#pyasdf.AsdfFile" title="pyasdf.AsdfFile"><tt class="xref py py-obj docutils literal"><span class="pre">AsdfFile</span></tt></a> for stream-writing.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Documentation</p>
+<dl class="attribute">
+<dt id="pyasdf.AsdfFile.blocks">
+<tt class="descname">blocks</tt><a class="headerlink" href="#pyasdf.AsdfFile.blocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the block manager associated with the <a class="reference internal" href="#pyasdf.AsdfFile" title="pyasdf.AsdfFile"><tt class="xref py py-obj docutils literal"><span class="pre">AsdfFile</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyasdf.AsdfFile.tree">
+<tt class="descname">tree</tt><a class="headerlink" href="#pyasdf.AsdfFile.tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the tree of data in the ASDF file.</p>
+<p>When set, the tree will be validated against the ASDF schema.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyasdf.AsdfFile.uri">
+<tt class="descname">uri</tt><a class="headerlink" href="#pyasdf.AsdfFile.uri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the URI associated with the <a class="reference internal" href="#pyasdf.AsdfFile" title="pyasdf.AsdfFile"><tt class="xref py py-obj docutils literal"><span class="pre">AsdfFile</span></tt></a>.</p>
+<p>In many cases, it is automatically determined from the file
+handle used to read or write the file.</p>
+</dd></dl>
+
+<p class="rubric">Methods Documentation</p>
+<dl class="method">
+<dt id="pyasdf.AsdfFile.close">
+<tt class="descname">close</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/pyasdf/asdf.html#AsdfFile.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyasdf.AsdfFile.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the file handles associated with the <a class="reference internal" href="#pyasdf.AsdfFile" title="pyasdf.AsdfFile"><tt class="xref py py-obj docutils literal"><span class="pre">AsdfFile</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyasdf.AsdfFile.find_references">
+<tt class="descname">find_references</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/pyasdf/asdf.html#AsdfFile.find_references"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyasdf.AsdfFile.find_references" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds all external &#8220;JSON References&#8221; in the tree and converts
+them to <tt class="xref py py-obj docutils literal"><span class="pre">reference.Reference</span></tt> objects.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyasdf.AsdfFile.make_reference">
+<tt class="descname">make_reference</tt><big>(</big><em>path=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="reference internal" href="../_modules/pyasdf/asdf.html#AsdfFile.make_reference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyasdf.AsdfFile.make_reference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a new reference to a part of this file&#8217;s tree, that can be
+assigned as a reference to another tree.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>path</strong> : list of str and int, optional</p>
+<blockquote>
+<div><p>The parts of the path pointing to an item in this tree.
+If omitted, points to the root of the tree.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>reference</strong> : reference.Reference</p>
+<blockquote class="last">
+<div><p>A reference object.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>For the given AsdfFile <tt class="docutils literal"><span class="pre">ff</span></tt>, add an external reference to the data in
+an external file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyasdf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">flat</span> <span class="o">=</span> <span class="n">pyasdf</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;http://stsci.edu/reference_files/flat.asdf&quot;</span><span class="p">)</span>  
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ff</span><span class="o">.</span><span class="n">tree</span><span class="p">[</span><span class="s">&#39;flat_field&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">flat</span><span class="o">.</span><span class="n">make_reference</span><span class="p">([</span><span class="s">&#39;data&#39;</span><span class="p">])</span>  
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pyasdf.AsdfFile.read">
+<em class="property">classmethod </em><tt class="descname">read</tt><big>(</big><em>fd</em>, <em>uri=None</em>, <em>mode=u'r'</em>, <em>_get_yaml_content=False</em><big>)</big><a class="reference internal" href="../_modules/pyasdf/asdf.html#AsdfFile.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyasdf.AsdfFile.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a ASDF file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>fd</strong> : string or file-like object</p>
+<blockquote>
+<div><p>May be a string <tt class="docutils literal"><span class="pre">file</span></tt> or <tt class="docutils literal"><span class="pre">http</span></tt> URI, or a Python
+file-like object.</p>
+</div></blockquote>
+<p><strong>uri</strong> : string, optional</p>
+<blockquote>
+<div><p>The URI of the file.  Only required if the URI can not be
+automatically determined from <tt class="xref py py-obj docutils literal"><span class="pre">fd</span></tt>.</p>
+</div></blockquote>
+<p><strong>mode</strong> : string, optional</p>
+<blockquote>
+<div><p>The mode to open the file in.  Must be <tt class="docutils literal"><span class="pre">r</span></tt> (default) or
+<tt class="docutils literal"><span class="pre">rw</span></tt>.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>asdffile</strong> : AsdfFile</p>
+<blockquote class="last">
+<div><p>The new AsdfFile object.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyasdf.AsdfFile.read_external">
+<tt class="descname">read_external</tt><big>(</big><em>uri</em><big>)</big><a class="reference internal" href="../_modules/pyasdf/asdf.html#AsdfFile.read_external"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyasdf.AsdfFile.read_external" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load an external ASDF file, from the given (possibly relative)
+URI.  There is a cache (internal to this ASDF file) that ensures
+each external ASDF file is loaded only once.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>uri</strong> : str</p>
+<blockquote>
+<div><p>An absolute or relative URI to resolve against the URI of
+this ASDF file.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>asdffile</strong> : AsdfFile</p>
+<blockquote class="last">
+<div><p>The external ASDF file.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyasdf.AsdfFile.resolve_references">
+<tt class="descname">resolve_references</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/pyasdf/asdf.html#AsdfFile.resolve_references"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyasdf.AsdfFile.resolve_references" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds all external &#8220;JSON References&#8221; in the tree, loads the
+external content, and places it directly in the tree.  Saving
+a ASDF file after this operation means it will have no
+external references, and will be completely self-contained.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyasdf.AsdfFile.resolve_uri">
+<tt class="descname">resolve_uri</tt><big>(</big><em>uri</em><big>)</big><a class="reference internal" href="../_modules/pyasdf/asdf.html#AsdfFile.resolve_uri"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyasdf.AsdfFile.resolve_uri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolve a (possibly relative) URI against the URI of this ASDF
+file.  May be overridden by base classes to change how URIs
+are resolved.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>uri</strong> : str</p>
+<blockquote>
+<div><p>An absolute or relative URI to resolve against the URI of
+this ASDF file.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>uri</strong> : str</p>
+<blockquote class="last">
+<div><p>The resolved URI.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyasdf.AsdfFile.set_block_type">
+<tt class="descname">set_block_type</tt><big>(</big><em>arr</em>, <em>block_type</em><big>)</big><a class="reference internal" href="../_modules/pyasdf/asdf.html#AsdfFile.set_block_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyasdf.AsdfFile.set_block_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the block type to use for the given array data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>arr</strong> : numpy.ndarray</p>
+<blockquote>
+<div><p>The array to set.  If multiple views of the array are in
+the tree, only the most recent block type setting will be
+used, since all views share a single block.</p>
+</div></blockquote>
+<p><strong>block_type</strong> : str</p>
+<blockquote class="last">
+<div><p>Must be one of:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">internal</span></tt>: The default.  The array data will be
+stored in a binary block in the same ASDF file.</li>
+<li><tt class="docutils literal"><span class="pre">external</span></tt>: Store the data in a binary block in a
+separate ASDF file.</li>
+<li><tt class="docutils literal"><span class="pre">inline</span></tt>: Store the data as YAML inline in the tree.</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyasdf.AsdfFile.update">
+<tt class="descname">update</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/pyasdf/asdf.html#AsdfFile.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyasdf.AsdfFile.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the file on disk in place (not implemented).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyasdf.AsdfFile.write_to">
+<tt class="descname">write_to</tt><big>(</big><em>fd</em>, <em>exploded=None</em><big>)</big><a class="reference internal" href="../_modules/pyasdf/asdf.html#AsdfFile.write_to"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyasdf.AsdfFile.write_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the ASDF file to the given file-like object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>fd</strong> : string or file-like object</p>
+<blockquote>
+<div><p>May be a string path to a file, or a Python file-like
+object.</p>
+</div></blockquote>
+<p><strong>exploded</strong> : bool, optional</p>
+<blockquote class="last">
+<div><p>If <a class="reference external" href="http://docs.python.org/library/constants.html#True" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></a>, write each data block in a separate ASDF file.
+If <a class="reference external" href="http://docs.python.org/library/constants.html#False" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">False</span></tt></a>, write each data block in this ASDF file.  If
+not provided, leave the block types as they are.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyasdf.AsdfFile.write_to_stream">
+<tt class="descname">write_to_stream</tt><big>(</big><em>data</em><big>)</big><a class="reference internal" href="../_modules/pyasdf/asdf.html#AsdfFile.write_to_stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyasdf.AsdfFile.write_to_stream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append additional data to the end of the <a class="reference internal" href="#pyasdf.AsdfFile" title="pyasdf.AsdfFile"><tt class="xref py py-obj docutils literal"><span class="pre">AsdfFile</span></tt></a> for
+stream-writing.</p>
+<p>See <a class="reference internal" href="pyasdf.Stream.html#pyasdf.Stream" title="pyasdf.Stream"><tt class="xref py py-obj docutils literal"><span class="pre">pyasdf.Stream</span></tt></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="#">AsdfFile</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/pyasdf.AsdfFile.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, Erik Bray, Michael Droettboom.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 30 Jul 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

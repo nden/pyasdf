@@ -3,6 +3,6 @@
 open
 ===========
 
-.. currentmodule:: pyfinf
+.. currentmodule:: pyasdf
 
 .. autofunction:: open

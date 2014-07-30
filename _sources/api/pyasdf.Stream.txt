@@ -3,7 +3,7 @@
 Stream
 =============
 
-.. currentmodule:: pyfinf
+.. currentmodule:: pyasdf
 
 .. autoclass:: Stream
    :show-inheritance:

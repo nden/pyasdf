@@ -1,0 +1,5 @@
+<map id="inheritance916eef7fd5" name="inheritance916eef7fd5">
+<area shape="rect" id="node1" href="../api/pyasdf.AsdfFile.html#pyasdf.AsdfFile" title="The main class that represents a ASDF file." alt="" coords="195,55,267,83"/>
+<area shape="rect" id="node4" title="The base class of all custom types in the tree." alt="" coords="25,5,108,33"/>
+<area shape="rect" id="node7" href="../api/pyasdf.Stream.html#pyasdf.Stream" title="Used to put a streamed array into the tree." alt="" coords="333,5,405,33"/>
+</map>

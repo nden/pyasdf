@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Examples &mdash; pyfinf v0.0.dev149</title>
+    <title>Examples &mdash; pyasdf v0.0.dev155</title>
     
     <link rel="stylesheet" href="../_static/bootstrap-astropy.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.0.dev149',
+        VERSION:     '0.0.dev155',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,10 +25,10 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/sidebar.js"></script>
     <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
-    <link rel="top" title="pyfinf v0.0.dev149" href="../index.html" />
-    <link rel="up" title="pyfinf" href="index.html" />
-    <link rel="next" title="open" href="../api/pyfinf.open.html" />
-    <link rel="prev" title="pyfinf" href="index.html" />
+    <link rel="top" title="pyasdf v0.0.dev155" href="../index.html" />
+    <link rel="up" title="pyasdf" href="index.html" />
+    <link rel="next" title="open" href="../api/pyasdf.open.html" />
+    <link rel="prev" title="pyasdf" href="index.html" />
 <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
 
   </head>
@@ -56,21 +56,21 @@
     <h3>Navigation</h3>
     <ul>
       <li class="right">
-	<a href="../api/pyfinf.open.html" title="open">
+	<a href="../api/pyasdf.open.html" title="open">
 	  next &raquo;
 	</a>
       </li>
       <li class="right">
-	<a href="index.html" title="pyfinf">
+	<a href="index.html" title="pyasdf">
 	  &laquo; previous
 	</a>
 	 |
       </li>
       <li>
-	<a href="../index.html">pyfinf v0.0.dev149</a>
+	<a href="../index.html">pyasdf v0.0.dev155</a>
 	 &raquo;
       </li>
-      <li><a href="index.html" accesskey="U">pyfinf</a> &raquo;</li>
+      <li><a href="index.html" accesskey="U">pyasdf</a> &raquo;</li>
       
       <li>Examples</li> 
     </ul>
@@ -86,29 +86,29 @@
 <h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="hello-world">
 <h2>Hello World<a class="headerlink" href="#hello-world" title="Permalink to this headline">¶</a></h2>
-<p>In it&#8217;s simplest form, Finf is a way of saving nested data structures
+<p>In it&#8217;s simplest form, ASDF is a way of saving nested data structures
 to YAML.  Here we save a dictionary with the key/value pair <tt class="docutils literal"><span class="pre">'hello':</span>
 <span class="pre">'world'</span></tt>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyfinf</span> <span class="kn">import</span> <span class="n">FinfFile</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyasdf</span> <span class="kn">import</span> <span class="n">AsdfFile</span>
 
-<span class="c"># Make the tree structure, and create a FinfFile from it.</span>
+<span class="c"># Make the tree structure, and create a AsdfFile from it.</span>
 <span class="n">tree</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;hello&#39;</span><span class="p">:</span> <span class="s">&#39;world&#39;</span><span class="p">}</span>
-<span class="n">ff</span> <span class="o">=</span> <span class="n">FinfFile</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+<span class="n">ff</span> <span class="o">=</span> <span class="n">AsdfFile</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
 
-<span class="c"># You can also make the FinfFile first, and modify its tree directly:</span>
-<span class="n">ff</span> <span class="o">=</span> <span class="n">FinfFile</span><span class="p">()</span>
+<span class="c"># You can also make the AsdfFile first, and modify its tree directly:</span>
+<span class="n">ff</span> <span class="o">=</span> <span class="n">AsdfFile</span><span class="p">()</span>
 <span class="n">ff</span><span class="o">.</span><span class="n">tree</span><span class="p">[</span><span class="s">&#39;hello&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;world&#39;</span>
 
 <span class="c"># Use the `with` construct so the file is automatically closed</span>
-<span class="k">with</span> <span class="n">ff</span><span class="o">.</span><span class="n">write_to</span><span class="p">(</span><span class="s">&quot;test.finf&quot;</span><span class="p">):</span>
+<span class="k">with</span> <span class="n">ff</span><span class="o">.</span><span class="n">write_to</span><span class="p">(</span><span class="s">&quot;test.asdf&quot;</span><span class="p">):</span>
     <span class="k">pass</span>
 </pre></div>
 </div>
 <div class="admonition">
-<p class="first admonition-title">test.finf</p>
+<p class="first admonition-title">test.asdf</p>
 <div class="last highlight-yaml"><div class="highlight"><pre><span class="nt">%YAML</span> <span class="m">1.1</span>
-<span class="nt">%TAG</span> <span class="kt">!</span> <span class="kt">tag:stsci.edu:finf/0.1.0/</span>
-<span class="nn">---</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/finf {hello</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">world}</span>
+<span class="nt">%TAG</span> <span class="kt">!</span> <span class="kt">tag:stsci.edu:asdf/0.1.0/</span>
+<span class="nn">---</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/asdf {hello</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">world}</span>
 <span class="nn">...</span>
 </pre></div>
 </div>
@@ -117,25 +117,32 @@ to YAML.  Here we save a dictionary with the key/value pair <tt class="docutils 
 <div class="section" id="saving-arrays">
 <h2>Saving arrays<a class="headerlink" href="#saving-arrays" title="Permalink to this headline">¶</a></h2>
 <p>Beyond the basic data types of dictionaries, lists, strings and
-numbers, the most important thing Finf can save is arrays.  It&#8217;s as
+numbers, the most important thing ASDF can save is arrays.  It&#8217;s as
 simple as putting a Numpy array somewhere in the tree.  Here, we save
 an 8x8 array of random floating-point numbers.  Note that the YAML
 part contains information about the structure (size and data type) of
 the array, but the actual array content is in a binary block.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyfinf</span> <span class="kn">import</span> <span class="n">FinfFile</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyasdf</span> <span class="kn">import</span> <span class="n">AsdfFile</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
 <span class="n">tree</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;my_array&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)}</span>
-<span class="n">ff</span> <span class="o">=</span> <span class="n">FinfFile</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
-<span class="k">with</span> <span class="n">ff</span><span class="o">.</span><span class="n">write_to</span><span class="p">(</span><span class="s">&quot;test.finf&quot;</span><span class="p">):</span>
+<span class="n">ff</span> <span class="o">=</span> <span class="n">AsdfFile</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">ff</span><span class="o">.</span><span class="n">write_to</span><span class="p">(</span><span class="s">&quot;test.asdf&quot;</span><span class="p">):</span>
     <span class="k">pass</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In the file examples below, the first YAML part appears as it
+appears in the file.  The <tt class="docutils literal"><span class="pre">BLOCK</span></tt> sections are stored as binary
+data in the file, but are presented in human-readable form on this
+page.</p>
+</div>
 <div class="admonition">
-<p class="first admonition-title">test.finf</p>
+<p class="first admonition-title">test.asdf</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="nt">%YAML</span> <span class="m">1.1</span>
-<span class="nt">%TAG</span> <span class="kt">!</span> <span class="kt">tag:stsci.edu:finf/0.1.0/</span>
-<span class="nn">---</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/finf</span>
+<span class="nt">%TAG</span> <span class="kt">!</span> <span class="kt">tag:stsci.edu:asdf/0.1.0/</span>
+<span class="nn">---</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/asdf</span>
 <span class="l-Scalar-Plain">my_array</span><span class="p-Indicator">:</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/ndarray</span>
   <span class="l-Scalar-Plain">byteorder</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">little</span>
   <span class="l-Scalar-Plain">dtype</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">float64</span>
@@ -148,39 +155,47 @@ the array, but the actual array content is in a binary block.</p>
     <span class="l-Scalar-Plain">flags</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0x0</span>
     <span class="l-Scalar-Plain">allocated</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">512</span>
     <span class="l-Scalar-Plain">size</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">512</span>
-    <span class="l-Scalar-Plain">data</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">ff1fe12464bfe53fce4accc67a10ed3fc2b8925c...</span>
+    <span class="l-Scalar-Plain">data</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">3b2c9e515b2de43f8265983d91c2e43f8ab7baa5...</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="schema-validation">
 <h2>Schema validation<a class="headerlink" href="#schema-validation" title="Permalink to this headline">¶</a></h2>
-<p>In the current draft of the FINF schema, there are very few elements
+<p>In the current draft of the ASDF schema, there are very few elements
 defined at the top-level &#8211; for the most part, the top-level can
 contain any ad hoc elements.  One of the few specified elements is
 <tt class="docutils literal"><span class="pre">data</span></tt>: it must be an array, and is used to specify the &#8220;main&#8221; data
 content (for some definition of &#8220;main&#8221;) so that tools that merely want
-to view or preview the FINF file have a standard location to find the
+to view or preview the ASDF file have a standard location to find the
 most interesting data.  If you set this to anything but an array,
-pyfinf will complain:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyfinf</span> <span class="kn">import</span> <span class="n">FinfFile</span>
+pyasdf will complain:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyasdf</span> <span class="kn">import</span> <span class="n">AsdfFile</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;data&#39;</span><span class="p">:</span> <span class="s">&#39;Not an array&#39;</span><span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">FinfFile</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>  
-<span class="go">ValidationError: mismatched tags, wanted</span>
-<span class="go">&#39;tag:stsci.edu:finf/0.1.0/core/ndarray&#39;, got</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">AsdfFile</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">ValidationError</span>: <span class="n">mismatched tags, wanted</span>
+<span class="go">&#39;tag:stsci.edu:asdf/0.1.0/core/ndarray&#39;, got</span>
 <span class="go">&#39;tag:yaml.org,2002:str&#39;</span>
+<span class="gp">...</span>
 </pre></div>
 </div>
-<p>This validation happens only when a <tt class="xref py py-obj docutils literal"><span class="pre">FinfFile</span></tt> is instantiated, read or saved, so it&#8217;s still possible to get the tree into an invalid intermediate state:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyfinf</span> <span class="kn">import</span> <span class="n">FinfFile</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ff</span> <span class="o">=</span> <span class="n">FinfFile</span><span class="p">()</span>
+<p>This validation happens only when a <tt class="xref py py-obj docutils literal"><span class="pre">AsdfFile</span></tt> is instantiated, read
+or saved, so it&#8217;s still possible to get the tree into an invalid
+intermediate state:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyasdf</span> <span class="kn">import</span> <span class="n">AsdfFile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ff</span> <span class="o">=</span> <span class="n">AsdfFile</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ff</span><span class="o">.</span><span class="n">tree</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;Not an array&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># The FINF file is now invalid, but pyfinf will tell us when</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># The ASDF file is now invalid, but pyasdf will tell us when</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c"># we write it out.</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ff</span><span class="o">.</span><span class="n">write_to</span><span class="p">(</span><span class="s">&#39;test.finf&#39;</span><span class="p">)</span>  
-<span class="go">ValidationError: mismatched tags, wanted</span>
-<span class="go">&#39;tag:stsci.edu:finf/0.1.0/core/ndarray&#39;, got</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ff</span><span class="o">.</span><span class="n">write_to</span><span class="p">(</span><span class="s">&#39;test.asdf&#39;</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">ValidationError</span>: <span class="n">mismatched tags, wanted</span>
+<span class="go">&#39;tag:stsci.edu:asdf/0.1.0/core/ndarray&#39;, got</span>
 <span class="go">&#39;tag:yaml.org,2002:str&#39;</span>
+<span class="gp">...</span>
 </pre></div>
 </div>
 </div>
@@ -190,7 +205,7 @@ pyfinf will complain:</p>
 data in the file.  In this example an array and a subview on that same
 array are saved to the same file, resulting in only a single block of
 data being saved.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyfinf</span> <span class="kn">import</span> <span class="n">FinfFile</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyasdf</span> <span class="kn">import</span> <span class="n">AsdfFile</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
 <span class="n">my_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
@@ -199,16 +214,16 @@ data being saved.</p>
     <span class="s">&#39;my_array&#39;</span><span class="p">:</span> <span class="n">my_array</span><span class="p">,</span>
     <span class="s">&#39;subset&#39;</span><span class="p">:</span>   <span class="n">subset</span>
 <span class="p">}</span>
-<span class="n">ff</span> <span class="o">=</span> <span class="n">FinfFile</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
-<span class="k">with</span> <span class="n">ff</span><span class="o">.</span><span class="n">write_to</span><span class="p">(</span><span class="s">&quot;test.finf&quot;</span><span class="p">):</span>
+<span class="n">ff</span> <span class="o">=</span> <span class="n">AsdfFile</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">ff</span><span class="o">.</span><span class="n">write_to</span><span class="p">(</span><span class="s">&quot;test.asdf&quot;</span><span class="p">):</span>
     <span class="k">pass</span>
 </pre></div>
 </div>
 <div class="admonition">
-<p class="first admonition-title">test.finf</p>
+<p class="first admonition-title">test.asdf</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="nt">%YAML</span> <span class="m">1.1</span>
-<span class="nt">%TAG</span> <span class="kt">!</span> <span class="kt">tag:stsci.edu:finf/0.1.0/</span>
-<span class="nn">---</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/finf</span>
+<span class="nt">%TAG</span> <span class="kt">!</span> <span class="kt">tag:stsci.edu:asdf/0.1.0/</span>
+<span class="nn">---</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/asdf</span>
 <span class="l-Scalar-Plain">my_array</span><span class="p-Indicator">:</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/ndarray</span>
   <span class="l-Scalar-Plain">byteorder</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">little</span>
   <span class="l-Scalar-Plain">dtype</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">float64</span>
@@ -228,7 +243,7 @@ data being saved.</p>
     <span class="l-Scalar-Plain">flags</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0x0</span>
     <span class="l-Scalar-Plain">allocated</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">512</span>
     <span class="l-Scalar-Plain">size</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">512</span>
-    <span class="l-Scalar-Plain">data</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">e4caf9d3a637e03f1c43d11bda1fe93f688bced4...</span>
+    <span class="l-Scalar-Plain">data</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">a4146972f9fece3f6698d8f713b7d73f200288f3...</span>
 </pre></div>
 </div>
 </div>
@@ -237,43 +252,43 @@ data being saved.</p>
 <h2>Saving inline arrays<a class="headerlink" href="#saving-inline-arrays" title="Permalink to this headline">¶</a></h2>
 <p>For these sort of small arrays, you may not care about the efficiency
 of a binary representation and want to just save the content directly
-in the YAML tree.  The <tt class="docutils literal"><span class="pre">blocks</span></tt> member of the <tt class="docutils literal"><span class="pre">FinfFile</span></tt> instance
+in the YAML tree.  The <a class="reference internal" href="../api/pyasdf.AsdfFile.html#pyasdf.AsdfFile.set_block_type" title="pyasdf.AsdfFile.set_block_type"><tt class="xref py py-obj docutils literal"><span class="pre">set_block_type</span></tt></a> method
 can be used to set the type of block of the associated data, either
 <tt class="docutils literal"><span class="pre">internal</span></tt>, <tt class="docutils literal"><span class="pre">external</span></tt> or <tt class="docutils literal"><span class="pre">inline</span></tt>.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyfinf</span> <span class="kn">import</span> <span class="n">FinfFile</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyasdf</span> <span class="kn">import</span> <span class="n">AsdfFile</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
 <span class="n">my_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
 <span class="n">tree</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;my_array&#39;</span><span class="p">:</span> <span class="n">my_array</span><span class="p">}</span>
-<span class="n">ff</span> <span class="o">=</span> <span class="n">FinfFile</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+<span class="n">ff</span> <span class="o">=</span> <span class="n">AsdfFile</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
 <span class="n">ff</span><span class="o">.</span><span class="n">set_block_type</span><span class="p">(</span><span class="n">my_array</span><span class="p">,</span> <span class="s">&#39;inline&#39;</span><span class="p">)</span>
-<span class="k">with</span> <span class="n">ff</span><span class="o">.</span><span class="n">write_to</span><span class="p">(</span><span class="s">&quot;test.finf&quot;</span><span class="p">):</span>
+<span class="k">with</span> <span class="n">ff</span><span class="o">.</span><span class="n">write_to</span><span class="p">(</span><span class="s">&quot;test.asdf&quot;</span><span class="p">):</span>
     <span class="k">pass</span>
 </pre></div>
 </div>
 <div class="admonition">
-<p class="first admonition-title">test.finf</p>
+<p class="first admonition-title">test.asdf</p>
 <div class="last highlight-yaml"><div class="highlight"><pre><span class="nt">%YAML</span> <span class="m">1.1</span>
-<span class="nt">%TAG</span> <span class="kt">!</span> <span class="kt">tag:stsci.edu:finf/0.1.0/</span>
-<span class="nn">---</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/finf</span>
+<span class="nt">%TAG</span> <span class="kt">!</span> <span class="kt">tag:stsci.edu:asdf/0.1.0/</span>
+<span class="nn">---</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/asdf</span>
 <span class="l-Scalar-Plain">my_array</span><span class="p-Indicator">:</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/ndarray</span>
   <span class="l-Scalar-Plain">data</span><span class="p-Indicator">:</span>
-  <span class="p-Indicator">-</span> <span class="p-Indicator">[</span><span class="nv">0.2972066780506043</span><span class="p-Indicator">,</span> <span class="nv">0.5234652891012275</span><span class="p-Indicator">,</span> <span class="nv">0.14794724077638333</span><span class="p-Indicator">,</span> <span class="nv">0.5897251789924343</span><span class="p-Indicator">,</span>
-    <span class="nv">0.6777437882915269</span><span class="p-Indicator">,</span> <span class="nv">0.7037487203498919</span><span class="p-Indicator">,</span> <span class="nv">0.12285668752243772</span><span class="p-Indicator">,</span> <span class="nv">0.02255036958537182</span><span class="p-Indicator">]</span>
-  <span class="p-Indicator">-</span> <span class="p-Indicator">[</span><span class="nv">0.7950654459036332</span><span class="p-Indicator">,</span> <span class="nv">0.32773048288435513</span><span class="p-Indicator">,</span> <span class="nv">0.9668358292299251</span><span class="p-Indicator">,</span> <span class="nv">0.7156523566944357</span><span class="p-Indicator">,</span>
-    <span class="nv">0.5629272394526945</span><span class="p-Indicator">,</span> <span class="nv">0.29455943342563773</span><span class="p-Indicator">,</span> <span class="nv">0.3590875074063432</span><span class="p-Indicator">,</span> <span class="nv">0.7030684506807089</span><span class="p-Indicator">]</span>
-  <span class="p-Indicator">-</span> <span class="p-Indicator">[</span><span class="nv">0.11801187680112224</span><span class="p-Indicator">,</span> <span class="nv">0.8161934972026385</span><span class="p-Indicator">,</span> <span class="nv">0.6924550283763982</span><span class="p-Indicator">,</span> <span class="nv">0.7859290194935625</span><span class="p-Indicator">,</span>
-    <span class="nv">0.17911419437867493</span><span class="p-Indicator">,</span> <span class="nv">0.648144158126075</span><span class="p-Indicator">,</span> <span class="nv">0.768297627887064</span><span class="p-Indicator">,</span> <span class="nv">0.9676188825508972</span><span class="p-Indicator">]</span>
-  <span class="p-Indicator">-</span> <span class="p-Indicator">[</span><span class="nv">0.8559988090034086</span><span class="p-Indicator">,</span> <span class="nv">0.2336149232333815</span><span class="p-Indicator">,</span> <span class="nv">0.6971638734759492</span><span class="p-Indicator">,</span> <span class="nv">0.32341424483976955</span><span class="p-Indicator">,</span>
-    <span class="nv">0.5991610903828759</span><span class="p-Indicator">,</span> <span class="nv">0.36115454633299315</span><span class="p-Indicator">,</span> <span class="nv">0.7852961876777732</span><span class="p-Indicator">,</span> <span class="nv">0.8702961468569256</span><span class="p-Indicator">]</span>
-  <span class="p-Indicator">-</span> <span class="p-Indicator">[</span><span class="nv">0.5559572012409972</span><span class="p-Indicator">,</span> <span class="nv">0.5376548215961565</span><span class="p-Indicator">,</span> <span class="nv">0.42008370255578087</span><span class="p-Indicator">,</span> <span class="nv">0.5742613394955337</span><span class="p-Indicator">,</span>
-    <span class="nv">0.02672842253400698</span><span class="p-Indicator">,</span> <span class="nv">0.44205042997078414</span><span class="p-Indicator">,</span> <span class="nv">0.0455316760300688</span><span class="p-Indicator">,</span> <span class="nv">0.6995048169047029</span><span class="p-Indicator">]</span>
-  <span class="p-Indicator">-</span> <span class="p-Indicator">[</span><span class="nv">0.7855891810931399</span><span class="p-Indicator">,</span> <span class="nv">0.5505521791203493</span><span class="p-Indicator">,</span> <span class="nv">0.6525193783557495</span><span class="p-Indicator">,</span> <span class="nv">0.5673711338752634</span><span class="p-Indicator">,</span>
-    <span class="nv">0.503699375677193</span><span class="p-Indicator">,</span> <span class="nv">0.13712455577505123</span><span class="p-Indicator">,</span> <span class="nv">0.7570912492414935</span><span class="p-Indicator">,</span> <span class="nv">0.03895394913698136</span><span class="p-Indicator">]</span>
-  <span class="p-Indicator">-</span> <span class="p-Indicator">[</span><span class="nv">0.17640219493701348</span><span class="p-Indicator">,</span> <span class="nv">0.4588579245706942</span><span class="p-Indicator">,</span> <span class="nv">0.7501167121382715</span><span class="p-Indicator">,</span> <span class="nv">0.23135430263093426</span><span class="p-Indicator">,</span>
-    <span class="nv">0.7257617027156388</span><span class="p-Indicator">,</span> <span class="nv">0.938906071227928</span><span class="p-Indicator">,</span> <span class="nv">0.6450784660899606</span><span class="p-Indicator">,</span> <span class="nv">0.5900985053018667</span><span class="p-Indicator">]</span>
-  <span class="p-Indicator">-</span> <span class="p-Indicator">[</span><span class="nv">0.6458978383072838</span><span class="p-Indicator">,</span> <span class="nv">0.8468475881974614</span><span class="p-Indicator">,</span> <span class="nv">0.35063639024053406</span><span class="p-Indicator">,</span> <span class="nv">0.029989095336060312</span><span class="p-Indicator">,</span>
-    <span class="nv">0.8080067039814186</span><span class="p-Indicator">,</span> <span class="nv">0.38027122675176617</span><span class="p-Indicator">,</span> <span class="nv">0.36215998651331094</span><span class="p-Indicator">,</span> <span class="nv">0.10547402064010813</span><span class="p-Indicator">]</span>
+  <span class="p-Indicator">-</span> <span class="p-Indicator">[</span><span class="nv">0.7342350436342033</span><span class="p-Indicator">,</span> <span class="nv">0.6420840173471715</span><span class="p-Indicator">,</span> <span class="nv">0.9366781401285432</span><span class="p-Indicator">,</span> <span class="nv">0.3848287614696042</span><span class="p-Indicator">,</span>
+    <span class="nv">0.32340001047171674</span><span class="p-Indicator">,</span> <span class="nv">0.297127262247885</span><span class="p-Indicator">,</span> <span class="nv">0.17665561545285635</span><span class="p-Indicator">,</span> <span class="nv">0.06412978542028469</span><span class="p-Indicator">]</span>
+  <span class="p-Indicator">-</span> <span class="p-Indicator">[</span><span class="nv">0.9947564386257631</span><span class="p-Indicator">,</span> <span class="nv">0.5953166621567317</span><span class="p-Indicator">,</span> <span class="nv">0.4790455023247919</span><span class="p-Indicator">,</span> <span class="nv">0.7979470422923342</span><span class="p-Indicator">,</span>
+    <span class="nv">0.41932327819054194</span><span class="p-Indicator">,</span> <span class="nv">0.7795055147313896</span><span class="p-Indicator">,</span> <span class="nv">0.8107012165781796</span><span class="p-Indicator">,</span> <span class="nv">0.14467383827251679</span><span class="p-Indicator">]</span>
+  <span class="p-Indicator">-</span> <span class="p-Indicator">[</span><span class="nv">0.2508322727026928</span><span class="p-Indicator">,</span> <span class="nv">0.3272190460466714</span><span class="p-Indicator">,</span> <span class="nv">0.2139640811749417</span><span class="p-Indicator">,</span> <span class="nv">0.9972026373345737</span><span class="p-Indicator">,</span>
+    <span class="nv">0.972657209923539</span><span class="p-Indicator">,</span> <span class="nv">0.4733113474103434</span><span class="p-Indicator">,</span> <span class="nv">0.20821254017996638</span><span class="p-Indicator">,</span> <span class="nv">0.9467676971485167</span><span class="p-Indicator">]</span>
+  <span class="p-Indicator">-</span> <span class="p-Indicator">[</span><span class="nv">0.1338621037672706</span><span class="p-Indicator">,</span> <span class="nv">0.5613222947222396</span><span class="p-Indicator">,</span> <span class="nv">0.450511814440412</span><span class="p-Indicator">,</span> <span class="nv">0.632165188075372</span><span class="p-Indicator">,</span>
+    <span class="nv">0.028023797414365448</span><span class="p-Indicator">,</span> <span class="nv">0.9624279192149019</span><span class="p-Indicator">,</span> <span class="nv">0.38402451967426443</span><span class="p-Indicator">,</span> <span class="nv">0.6333591058792893</span><span class="p-Indicator">]</span>
+  <span class="p-Indicator">-</span> <span class="p-Indicator">[</span><span class="nv">0.7698259874667418</span><span class="p-Indicator">,</span> <span class="nv">0.7946870470634814</span><span class="p-Indicator">,</span> <span class="nv">0.2150299898208683</span><span class="p-Indicator">,</span> <span class="nv">0.8798975805103808</span><span class="p-Indicator">,</span>
+    <span class="nv">0.7127996793884952</span><span class="p-Indicator">,</span> <span class="nv">0.6766638155935308</span><span class="p-Indicator">,</span> <span class="nv">0.36806425942414345</span><span class="p-Indicator">,</span> <span class="nv">0.1127013484874736</span><span class="p-Indicator">]</span>
+  <span class="p-Indicator">-</span> <span class="p-Indicator">[</span><span class="nv">0.3553166296677567</span><span class="p-Indicator">,</span> <span class="nv">0.039664367605821704</span><span class="p-Indicator">,</span> <span class="nv">0.48087843626241344</span><span class="p-Indicator">,</span> <span class="nv">0.43780887131389845</span><span class="p-Indicator">,</span>
+    <span class="nv">0.8802638669040626</span><span class="p-Indicator">,</span> <span class="nv">0.18408646431140885</span><span class="p-Indicator">,</span> <span class="nv">0.11725939998723411</span><span class="p-Indicator">,</span> <span class="nv">0.7332877247872086</span><span class="p-Indicator">]</span>
+  <span class="p-Indicator">-</span> <span class="p-Indicator">[</span><span class="nv">0.6140214687941828</span><span class="p-Indicator">,</span> <span class="nv">0.3865993288433769</span><span class="p-Indicator">,</span> <span class="nv">0.15473965247033727</span><span class="p-Indicator">,</span> <span class="nv">0.8068270870660155</span><span class="p-Indicator">,</span>
+    <span class="nv">0.02139386586724723</span><span class="p-Indicator">,</span> <span class="nv">0.5946451389867425</span><span class="p-Indicator">,</span> <span class="nv">0.8618194339092539</span><span class="p-Indicator">,</span> <span class="nv">0.1809347978923681</span><span class="p-Indicator">]</span>
+  <span class="p-Indicator">-</span> <span class="p-Indicator">[</span><span class="nv">0.6616843034130642</span><span class="p-Indicator">,</span> <span class="nv">0.2906062404961758</span><span class="p-Indicator">,</span> <span class="nv">0.4908935977335933</span><span class="p-Indicator">,</span> <span class="nv">0.2018223322010212</span><span class="p-Indicator">,</span>
+    <span class="nv">0.5984125763226066</span><span class="p-Indicator">,</span> <span class="nv">0.9621711462567368</span><span class="p-Indicator">,</span> <span class="nv">0.6964194681653768</span><span class="p-Indicator">,</span> <span class="nv">0.8391924149849298</span><span class="p-Indicator">]</span>
   <span class="l-Scalar-Plain">dtype</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">float64</span>
   <span class="l-Scalar-Plain">shape</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">8</span><span class="p-Indicator">,</span> <span class="nv">8</span><span class="p-Indicator">]</span>
 <span class="nn">...</span>
@@ -283,41 +298,41 @@ can be used to set the type of block of the associated data, either
 </div>
 <div class="section" id="saving-external-arrays">
 <h2>Saving external arrays<a class="headerlink" href="#saving-external-arrays" title="Permalink to this headline">¶</a></h2>
-<p>For various reasons discussion in the &#8220;Exploded Form&#8221; section of the
-FINF specification, you may want to save the data in an external
+<p>For various reasons discussed in the &#8220;Exploded Form&#8221; section of the
+ASDF specification, you may want to save the data in an external
 block.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyfinf</span> <span class="kn">import</span> <span class="n">FinfFile</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyasdf</span> <span class="kn">import</span> <span class="n">AsdfFile</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
 <span class="n">my_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
 <span class="n">tree</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;my_array&#39;</span><span class="p">:</span> <span class="n">my_array</span><span class="p">}</span>
-<span class="n">ff</span> <span class="o">=</span> <span class="n">FinfFile</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+<span class="n">ff</span> <span class="o">=</span> <span class="n">AsdfFile</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
 <span class="n">ff</span><span class="o">.</span><span class="n">set_block_type</span><span class="p">(</span><span class="n">my_array</span><span class="p">,</span> <span class="s">&#39;external&#39;</span><span class="p">)</span>
-<span class="k">with</span> <span class="n">ff</span><span class="o">.</span><span class="n">write_to</span><span class="p">(</span><span class="s">&quot;test.finf&quot;</span><span class="p">):</span>
+<span class="k">with</span> <span class="n">ff</span><span class="o">.</span><span class="n">write_to</span><span class="p">(</span><span class="s">&quot;test.asdf&quot;</span><span class="p">):</span>
     <span class="k">pass</span>
 </pre></div>
 </div>
 <div class="admonition">
-<p class="first admonition-title">test.finf</p>
+<p class="first admonition-title">test.asdf</p>
 <div class="last highlight-yaml"><div class="highlight"><pre><span class="nt">%YAML</span> <span class="m">1.1</span>
-<span class="nt">%TAG</span> <span class="kt">!</span> <span class="kt">tag:stsci.edu:finf/0.1.0/</span>
-<span class="nn">---</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/finf</span>
+<span class="nt">%TAG</span> <span class="kt">!</span> <span class="kt">tag:stsci.edu:asdf/0.1.0/</span>
+<span class="nn">---</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/asdf</span>
 <span class="l-Scalar-Plain">my_array</span><span class="p-Indicator">:</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/ndarray</span>
   <span class="l-Scalar-Plain">byteorder</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">little</span>
   <span class="l-Scalar-Plain">dtype</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">float64</span>
   <span class="l-Scalar-Plain">shape</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">8</span><span class="p-Indicator">,</span> <span class="nv">8</span><span class="p-Indicator">]</span>
-  <span class="l-Scalar-Plain">source</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">test0000.finf</span>
+  <span class="l-Scalar-Plain">source</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">test0000.asdf</span>
 <span class="nn">...</span>
 </pre></div>
 </div>
 </div>
 <div class="admonition">
-<p class="first admonition-title">test0000.finf</p>
+<p class="first admonition-title">test0000.asdf</p>
 <div class="last highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">BLOCK 0</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">flags</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0x0</span>
     <span class="l-Scalar-Plain">allocated</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">512</span>
     <span class="l-Scalar-Plain">size</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">512</span>
-    <span class="l-Scalar-Plain">data</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">bcf42016126eda3f58e54b2a2ea8ee3f681b2356...</span>
+    <span class="l-Scalar-Plain">data</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">de5366caf656da3f02a6f60daa02de3f00205fcd...</span>
 </pre></div>
 </div>
 </div>
@@ -327,16 +342,17 @@ block.</p>
 <p>In certain scenarios, you may want to stream data to disk, rather than
 writing an entire array of data at once.  For example, it may not be
 possible to fit the entire array in memory, or you may want to save
-data from a device as it comes in to prevent loss.  The FINF standard
+data from a device as it comes in to prevent loss.  The ASDF standard
 allows exactly one streaming block per file where the size of the
 block isn&#8217;t included in the block header, but instead is implicitly
 determined to include all of the remaining contents of the file.  By
 definition, it must be the last block in the file.</p>
 <p>To use streaming, rather than including a Numpy array object in the
-tree, you include a <a class="reference internal" href="../api/pyfinf.Stream.html#pyfinf.Stream" title="pyfinf.Stream"><tt class="xref py py-obj docutils literal"><span class="pre">pyfinf.Stream</span></tt></a> object which sets up the structure
-of the streamed data, but will not write out content to the file
-automatically.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyfinf</span> <span class="kn">import</span> <span class="n">FinfFile</span><span class="p">,</span> <span class="n">Stream</span>
+tree, you include a <a class="reference internal" href="../api/pyasdf.Stream.html#pyasdf.Stream" title="pyasdf.Stream"><tt class="xref py py-obj docutils literal"><span class="pre">pyasdf.Stream</span></tt></a> object which sets up the structure
+of the streamed data, but will not write out the actual content.  The
+<a class="reference internal" href="../api/pyasdf.AsdfFile.html#pyasdf.AsdfFile.write_to_stream" title="pyasdf.AsdfFile.write_to_stream"><tt class="xref py py-obj docutils literal"><span class="pre">write_to_stream</span></tt></a> method is then later used to
+manually write out the binary data.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyasdf</span> <span class="kn">import</span> <span class="n">AsdfFile</span><span class="p">,</span> <span class="n">Stream</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
 <span class="n">tree</span> <span class="o">=</span> <span class="p">{</span>
@@ -344,8 +360,8 @@ automatically.</p>
     <span class="s">&#39;my_stream&#39;</span><span class="p">:</span> <span class="n">Stream</span><span class="p">([</span><span class="mi">128</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
 <span class="p">}</span>
 
-<span class="n">ff</span> <span class="o">=</span> <span class="n">FinfFile</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
-<span class="k">with</span> <span class="n">ff</span><span class="o">.</span><span class="n">write_to</span><span class="p">(</span><span class="s">&#39;test.finf&#39;</span><span class="p">):</span>
+<span class="n">ff</span> <span class="o">=</span> <span class="n">AsdfFile</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">ff</span><span class="o">.</span><span class="n">write_to</span><span class="p">(</span><span class="s">&#39;test.asdf&#39;</span><span class="p">):</span>
     <span class="c"># Write 100 rows of data, one row at a time.</span>
     <span class="c"># write_to_stream expects the raw binary bytes, not an array,</span>
     <span class="c"># so we use `tostring()`</span>
@@ -354,10 +370,10 @@ automatically.</p>
 </pre></div>
 </div>
 <div class="admonition">
-<p class="first admonition-title">test.finf</p>
+<p class="first admonition-title">test.asdf</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="nt">%YAML</span> <span class="m">1.1</span>
-<span class="nt">%TAG</span> <span class="kt">!</span> <span class="kt">tag:stsci.edu:finf/0.1.0/</span>
-<span class="nn">---</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/finf</span>
+<span class="nt">%TAG</span> <span class="kt">!</span> <span class="kt">tag:stsci.edu:asdf/0.1.0/</span>
+<span class="nn">---</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/asdf</span>
 <span class="l-Scalar-Plain">my_stream</span><span class="p-Indicator">:</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/ndarray</span>
   <span class="l-Scalar-Plain">byteorder</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">little</span>
   <span class="l-Scalar-Plain">dtype</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">float64</span>
@@ -377,11 +393,11 @@ automatically.</p>
 </div>
 <div class="section" id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
-<p>FINF files may reference items in the tree in other FINF files.  The
+<p>ASDF files may reference items in the tree in other ASDF files.  The
 syntax used in the file for this is called &#8220;JSON Pointer&#8221;, but the
 Python programmer can largely ignore that.</p>
-<p>First, we&#8217;ll create a FINF file with a couple of arrays in it:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyfinf</span> <span class="kn">import</span> <span class="n">FinfFile</span>
+<p>First, we&#8217;ll create a ASDF file with a couple of arrays in it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">pyasdf</span> <span class="kn">import</span> <span class="n">AsdfFile</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
 <span class="n">tree</span> <span class="o">=</span> <span class="p">{</span>
@@ -389,16 +405,16 @@ Python programmer can largely ignore that.</p>
     <span class="s">&#39;b&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
 <span class="p">}</span>
 
-<span class="n">target</span> <span class="o">=</span> <span class="n">FinfFile</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
-<span class="k">with</span> <span class="n">target</span><span class="o">.</span><span class="n">write_to</span><span class="p">(</span><span class="s">&#39;target.finf&#39;</span><span class="p">):</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">AsdfFile</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">target</span><span class="o">.</span><span class="n">write_to</span><span class="p">(</span><span class="s">&#39;target.asdf&#39;</span><span class="p">):</span>
     <span class="k">pass</span>
 </pre></div>
 </div>
 <div class="admonition">
-<p class="first admonition-title">target.finf</p>
+<p class="first admonition-title">target.asdf</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="nt">%YAML</span> <span class="m">1.1</span>
-<span class="nt">%TAG</span> <span class="kt">!</span> <span class="kt">tag:stsci.edu:finf/0.1.0/</span>
-<span class="nn">---</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/finf</span>
+<span class="nt">%TAG</span> <span class="kt">!</span> <span class="kt">tag:stsci.edu:asdf/0.1.0/</span>
+<span class="nn">---</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/asdf</span>
 <span class="l-Scalar-Plain">a</span><span class="p-Indicator">:</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/ndarray</span>
   <span class="l-Scalar-Plain">byteorder</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">little</span>
   <span class="l-Scalar-Plain">dtype</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">int64</span>
@@ -433,52 +449,52 @@ First, we&#8217;ll load the source file in Python and use the
 Second, we&#8217;ll work at the lower level by manually writing a JSON
 Pointer to array <tt class="docutils literal"><span class="pre">b</span></tt>, which doesn&#8217;t require loading or having access
 to the target file.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">ff</span> <span class="o">=</span> <span class="n">FinfFile</span><span class="p">()</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ff</span> <span class="o">=</span> <span class="n">AsdfFile</span><span class="p">()</span>
 
-<span class="k">with</span> <span class="n">FinfFile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;target.finf&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">target</span><span class="p">:</span>
+<span class="k">with</span> <span class="n">AsdfFile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;target.asdf&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">target</span><span class="p">:</span>
     <span class="n">ff</span><span class="o">.</span><span class="n">tree</span><span class="p">[</span><span class="s">&#39;my_ref_a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">make_reference</span><span class="p">([</span><span class="s">&#39;a&#39;</span><span class="p">])</span>
 
-<span class="n">ff</span><span class="o">.</span><span class="n">tree</span><span class="p">[</span><span class="s">&#39;my_ref_b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;$ref&#39;</span><span class="p">:</span> <span class="s">&#39;target.finf#b&#39;</span><span class="p">}</span>
+<span class="n">ff</span><span class="o">.</span><span class="n">tree</span><span class="p">[</span><span class="s">&#39;my_ref_b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;$ref&#39;</span><span class="p">:</span> <span class="s">&#39;target.asdf#b&#39;</span><span class="p">}</span>
 
-<span class="k">with</span> <span class="n">ff</span><span class="o">.</span><span class="n">write_to</span><span class="p">(</span><span class="s">&#39;source.finf&#39;</span><span class="p">):</span>
+<span class="k">with</span> <span class="n">ff</span><span class="o">.</span><span class="n">write_to</span><span class="p">(</span><span class="s">&#39;source.asdf&#39;</span><span class="p">):</span>
     <span class="k">pass</span>
 </pre></div>
 </div>
 <div class="admonition">
-<p class="first admonition-title">source.finf</p>
+<p class="first admonition-title">source.asdf</p>
 <div class="last highlight-yaml"><div class="highlight"><pre><span class="nt">%YAML</span> <span class="m">1.1</span>
-<span class="nt">%TAG</span> <span class="kt">!</span> <span class="kt">tag:stsci.edu:finf/0.1.0/</span>
-<span class="nn">---</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/finf</span>
-<span class="l-Scalar-Plain">my_ref_a</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span><span class="nv">$ref</span><span class="p-Indicator">:</span> <span class="nv">target.finf#a</span><span class="p-Indicator">}</span>
-<span class="l-Scalar-Plain">my_ref_b</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span><span class="nv">$ref</span><span class="p-Indicator">:</span> <span class="nv">target.finf#b</span><span class="p-Indicator">}</span>
+<span class="nt">%TAG</span> <span class="kt">!</span> <span class="kt">tag:stsci.edu:asdf/0.1.0/</span>
+<span class="nn">---</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/asdf</span>
+<span class="l-Scalar-Plain">my_ref_a</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span><span class="nv">$ref</span><span class="p-Indicator">:</span> <span class="nv">target.asdf#a</span><span class="p-Indicator">}</span>
+<span class="l-Scalar-Plain">my_ref_b</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span><span class="nv">$ref</span><span class="p-Indicator">:</span> <span class="nv">target.asdf#b</span><span class="p-Indicator">}</span>
 <span class="nn">...</span>
 </pre></div>
 </div>
 </div>
-<p>Calling <a class="reference internal" href="../api/pyfinf.FinfFile.html#pyfinf.FinfFile.find_references" title="pyfinf.FinfFile.find_references"><tt class="xref py py-obj docutils literal"><span class="pre">find_references</span></tt></a> will look up all of the
+<p>Calling <a class="reference internal" href="../api/pyasdf.AsdfFile.html#pyasdf.AsdfFile.find_references" title="pyasdf.AsdfFile.find_references"><tt class="xref py py-obj docutils literal"><span class="pre">find_references</span></tt></a> will look up all of the
 references so they can be used as if they were local to the tree.  It
 doesn&#8217;t actually move any of the data, and keeps the references as
 references.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">ff</span> <span class="o">=</span> <span class="n">FinfFile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;source.finf&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ff</span> <span class="o">=</span> <span class="n">AsdfFile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;source.asdf&#39;</span><span class="p">)</span>
 <span class="n">ff</span><span class="o">.</span><span class="n">find_references</span><span class="p">()</span>
 <span class="k">assert</span> <span class="n">ff</span><span class="o">.</span><span class="n">tree</span><span class="p">[</span><span class="s">&#39;my_ref_b&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">10</span><span class="p">,)</span>
 </pre></div>
 </div>
-<p>On the other hand, calling <a class="reference internal" href="../api/pyfinf.FinfFile.html#pyfinf.FinfFile.resolve_references" title="pyfinf.FinfFile.resolve_references"><tt class="xref py py-obj docutils literal"><span class="pre">resolve_references</span></tt></a>
+<p>On the other hand, calling <a class="reference internal" href="../api/pyasdf.AsdfFile.html#pyasdf.AsdfFile.resolve_references" title="pyasdf.AsdfFile.resolve_references"><tt class="xref py py-obj docutils literal"><span class="pre">resolve_references</span></tt></a>
 places all of the referenced content directly in the tree, so when we
 write it out again, all of the external references are gone, with the
 literal content in its place.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">ff</span> <span class="o">=</span> <span class="n">FinfFile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;source.finf&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ff</span> <span class="o">=</span> <span class="n">AsdfFile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s">&#39;source.asdf&#39;</span><span class="p">)</span>
 <span class="n">ff</span><span class="o">.</span><span class="n">resolve_references</span><span class="p">()</span>
-<span class="k">with</span> <span class="n">FinfFile</span><span class="p">(</span><span class="n">ff</span><span class="p">)</span><span class="o">.</span><span class="n">write_to</span><span class="p">(</span><span class="s">&#39;resolved.finf&#39;</span><span class="p">):</span>
+<span class="k">with</span> <span class="n">AsdfFile</span><span class="p">(</span><span class="n">ff</span><span class="p">)</span><span class="o">.</span><span class="n">write_to</span><span class="p">(</span><span class="s">&#39;resolved.asdf&#39;</span><span class="p">):</span>
     <span class="k">pass</span>
 </pre></div>
 </div>
 <div class="admonition">
-<p class="first admonition-title">resolved.finf</p>
+<p class="first admonition-title">resolved.asdf</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="nt">%YAML</span> <span class="m">1.1</span>
-<span class="nt">%TAG</span> <span class="kt">!</span> <span class="kt">tag:stsci.edu:finf/0.1.0/</span>
-<span class="nn">---</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/finf</span>
+<span class="nt">%TAG</span> <span class="kt">!</span> <span class="kt">tag:stsci.edu:asdf/0.1.0/</span>
+<span class="nn">---</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/asdf</span>
 <span class="l-Scalar-Plain">my_ref_a</span><span class="p-Indicator">:</span> <span class="kt">!core</span><span class="l-Scalar-Plain">/ndarray</span>
   <span class="l-Scalar-Plain">byteorder</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">little</span>
   <span class="l-Scalar-Plain">dtype</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">int64</span>
@@ -509,10 +525,14 @@ literal content in its place.</p>
 </div>
 <p>A similar feature provided by YAML, anchors and aliases, also provides
 a way to support references within the same file.  These are supported
-by pyfinf for reading, but there is no direct support for writing
-them, since the JSON Pointer approach here is more powerful: it can
-reference elements in another file by their physical location in the
-tree, not just be an arbitrary identifier.</p>
+by pyasdf, however the JSON Pointer approach is generally favored because:</p>
+<blockquote>
+<div><ul class="simple">
+<li>It is possible to reference elements in another file</li>
+<li>Elements are referenced by location in the tree, not an
+identifier, therefore, everything can be referenced.</li>
+</ul>
+</div></blockquote>
 </div>
 </div>
 
@@ -543,13 +563,13 @@ tree, not just be an arbitrary identifier.</p>
     </div>
 <footer class="footer">
   <p class="pull-right">
-    <a href="../_sources/pyfinf/examples.txt"
+    <a href="../_sources/pyasdf/examples.txt"
        rel="nofollow">Page Source</a> &nbsp;
     <a href="#">Back to Top</a></p>
   <p>
     &copy; Copyright 2014, Erik Bray, Michael Droettboom.<br/>
-    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2. &nbsp;
-    Last built 25 Jun 2014. <br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 30 Jul 2014. <br/>
   </p>
 </footer>
   </body>
