@@ -22,7 +22,7 @@ class AffineType(TransformType):
 
     @classmethod
     def from_tree_transform(cls, node, ctx):
-        matrix = node['matrix']
+        matrix = np.asarray(node['matrix'])
         if matrix.shape != (3, 3):
             raise NotImplementedError(
                 "pyasdf currently only supports 3x3 (2D) affine transformation "
@@ -33,10 +33,10 @@ class AffineType(TransformType):
 
     @classmethod
     def to_tree_transform(cls, model, ctx):
-        matrix = np.zeros((3, 3))
-        matrix[:2, :2] = model.matrix
-        matrix[2, :2] = model.translation
-
+        #matrix = np.zeros((3, 3))
+        #matrix[:2, :2] = model.matrix
+        #matrix[2, :2] = model.translation
+        matrix = model.matrix.value.tolist()
         node = {'matrix': matrix}
         return yamlutil.custom_tree_to_tagged_tree(node, ctx)
 
@@ -67,6 +67,76 @@ class Rotate2DType(TransformType):
         assert (isinstance(a, modeling.rotations.Rotation2D) and
                 isinstance(b, modeling.rotations.Rotation2D))
         assert_array_equal(a.angle, b.angle)
+
+
+class Rotate3DType(TransformType):
+    name = "transform/rotate3d"
+    types = [modeling.rotations.Rotation2D]
+
+    @classmethod
+    def from_tree_transform(cls, node, ctx):
+        return modeling.rotations.Rotation2D(node['angle'])
+
+    @classmethod
+    def to_tree_transform(cls, model, ctx):
+        return {'angle': model.angle.value}
+
+    @classmethod
+    def assert_equal(cls, a, b):
+        # TODO: If models become comparable themselves, remove this.
+        assert (isinstance(a, modeling.rotations.Rotation2D) and
+                isinstance(b, modeling.rotations.Rotation2D))
+        assert_array_equal(a.angle, b.angle)
+
+
+class RotateNative2Celestial(TransformType):
+    name = "transform/rotate3d"
+    types = [modeling.rotations.RotateNative2Celestial]
+
+    @classmethod
+    def from_tree_transform(cls, node, ctx):
+        return modeling.rotations.RotateNative2Celestial(node['phi'], node['theta'], node['psi'])
+
+    @classmethod
+    def to_tree_transform(cls, model, ctx):
+        return {'phi': model.phi.value,
+                'theta': model.theta.value,
+                'psi': model.psi.value
+                }
+
+    @classmethod
+    def assert_equal(cls, a, b):
+        # TODO: If models become comparable themselves, remove this.
+        assert (isinstance(a, modeling.rotations.RotateNative2Celestial) and
+                isinstance(b, modeling.rotations.RotateNative2Celestial))
+        assert_array_equal(a.phi, b.phi)
+        assert_array_equal(a.psi, b.psi)
+        assert_array_equal(a.theta, b.theta)
+
+
+class RotateCelestial2Native(TransformType):
+    name = "transform/rotate3d"
+    types = [modeling.rotations.RotateCelestial2Native]
+
+    @classmethod
+    def from_tree_transform(cls, node, ctx):
+        return modeling.rotations.RotateCelestial2Native(node['phi'], node['theta'], node['psi'])
+
+    @classmethod
+    def to_tree_transform(cls, model, ctx):
+        return {'phi': model.phi.value,
+                'theta': model.theta.value,
+                'psi': model.psi.value
+                }
+
+    @classmethod
+    def assert_equal(cls, a, b):
+        # TODO: If models become comparable themselves, remove this.
+        assert (isinstance(a, modeling.rotations.RotateCelestial2Native) and
+                isinstance(b, modeling.rotations.RotateCelestial2Native))
+        assert_array_equal(a.phi, b.phi)
+        assert_array_equal(a.psi, b.psi)
+        assert_array_equal(a.theta, b.theta)
 
 
 class TangentType(TransformType):
