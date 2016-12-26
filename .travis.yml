@@ -7,7 +7,6 @@ addons:
   apt:
     packages:
     - graphviz
-    - texlive-extras
     - dvipng
 
 python:
