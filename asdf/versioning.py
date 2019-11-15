@@ -5,7 +5,7 @@
 This module deals with things that change between different versions
 of the ASDF spec.
 """
-from distutils.version import LooseVersion
+
 from functools import total_ordering
 
 import yaml
