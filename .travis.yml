@@ -6,6 +6,9 @@ language: c
 os:
     - linux
 
+git:
+  depth: false
+  
 # Use Travis' container-based architecture
 sudo: false
 
